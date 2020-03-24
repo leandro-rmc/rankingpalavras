@@ -49,7 +49,7 @@ static void reduz_mapa_diretamente (Mapa *mp, int tamanho_grupo_itens){
 }
 static void desfragmenta_mapa (Mapa *mp, int indiceNulo){
     for (int i = indiceNulo; i <= mp->total - 2; i++)
-        mp->lista[i] = mp->lista[i] + 1;
+        mp->lista[i] = mp->lista[i + 1];
 }
 static void adiciona_item_diretamente (Mapa *mp, int indice, char *s){
     //Adiciona um item em um dado índice, sem qualquer tipo de verificação.
@@ -96,30 +96,30 @@ void insere_termo (Mapa *mp, char *s){
 
 int incrementa (Mapa *mp, char *s){
     int termo_encontrado = encontra_termo(mp,s);
-    if (termo_encontrado == -1)
-        return -1;
+    if (termo_encontrado == -1) return -1;
+
     mp->lista[termo_encontrado]->conta++;
     reorganiza_item_diretamente(mp, termo_encontrado);
     return 1;
 }
 int escreve_cont (Mapa *mp, char *s, int c){
     int termo_encontrado = encontra_termo(mp,s);
-    if (termo_encontrado == -1)
-        return -1;
+    if (termo_encontrado == -1) return -1;
+
     mp->lista[termo_encontrado]->conta = c;
     reorganiza_item_diretamente(mp, termo_encontrado);
     return 1;
 }
 int le_contador (Mapa *mp, char *s){
     int termo_encontrado = encontra_termo(mp,s);
-    if (termo_encontrado == -1)
-        return -1;
+    if (termo_encontrado == -1) return -1;
+
     return mp->lista[termo_encontrado]->conta;
 }
 int remove_termo (Mapa *mp, char *s){
     int termo_encontrado = encontra_termo(mp,s);
-    if (termo_encontrado == -1)
-        return -1;
+    if (termo_encontrado == -1) return -1;
+
     free(mp->lista[termo_encontrado]->termo);
     free(mp->lista[termo_encontrado]);
 
@@ -146,6 +146,9 @@ void libera_mapa (Mapa * mp){
 
     //Reinicia os valores do mapa
     inicia_mapa(mp);
+
+    //Libera da memória a estrutura, caso tenha sido alocada dinamicamente
+    free(mp);
 }
 int tamanho_mapa (Mapa * mp){
     return mp->total;
