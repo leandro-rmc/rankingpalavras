@@ -50,4 +50,4 @@ void le_termo (Mapa * mp, int i, char *t, int *c); //retorna em ‘t’ o termo 
 
 2. Utilizando o TAD Mapa, crie um programa que exiba o ranking (contagem em ordem decrescente) das palavras de um arquivo texto especificado pelo usuário. Veja abaixo como deve ser a interface (mínima) do programa.
 
-![Interface](https://i.imgur.com/EXxeGgB.png)
+![Interface](https://user-images.githubusercontent.com/36391793/77501900-18b59a00-6e38-11ea-909f-c409d902b753.png)
