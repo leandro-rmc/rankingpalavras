@@ -1,5 +1,4 @@
-# Ranking de Palavras - Estrutura de Dados I
-## Trabalho proposto por Dilza Schwartzman em suas aulas
+# Ranking de Palavras - Estrutura de Dados I - Trabalho proposto por Dilza Schwartzman em suas aulas
 
 Neste período de quarentena, estou aproveitando e adiantando um dos trabalhos de Estrutura de Dados I, que encontrei no grupo. Não se sabe se esse trabalho também será passado para minha turma, pois as aulas foram interrompidas antes do trabalho ser escolhido, mas fazê-lo me proporcionará mais experiência. Possuo uma certa experiência com algorítmos, manipulação de memória, Assembly x86, entre outros. Não tenho muita experiência direta em Estrutura de Dados, mas o conteúdo é facilmente absorvido por quem já tem experiência nesses assuntos mencionados anteriormente.
 
@@ -8,10 +7,9 @@ No momento, apenas a primeira metade do trabalho está pronta (todas as funçõe
 Algumas assinaturas das funções do trabalho da Dilza foram alteradas por mim, como tipos de retorno "void" sendo alterados para "int" para retornarem códigos de erro, caso a operação falhe (não encontre uma palavra, por exemplo). Uma função de verificar a existência de uma determinada palavra também foi criada.
 
 
-## Detalhes do trabalho proposto
-### Texto de Dilza Schwartzman*
+## Detalhes do trabalho proposto (Texto e imagem de Dilza Schwartzman*)
 
-Crie um TAD Mapa que armazenará um conjunto de palavras (strings ou cadeias de caracteres) e um contador associado a cada uma delas. Os itens do mapa deverão ser mantidos em ordem decrescente dos valores nos contadores. Abaixo são apresentadas as estruturas de dados que devem ser utilizadas e as operações que devem ser implementadas minimamente. O TAD deverá ser criado em arquivo de código separado (Mapa.c) e o arquivo de include correspondente (Mapa.h) também deverá ser disponibilizado. A alocação do vetor de ponteiros (Item** lista) deverá ser feita dinamicamente em blocos de 10 ponteiros por vez. A alocação do espaço para cada string deverá ser exatamente do seu tamanho. Faça um pequeno programa (main.c) para testar as operações implementadas.
+1. Crie um TAD Mapa que armazenará um conjunto de palavras (strings ou cadeias de caracteres) e um contador associado a cada uma delas. Os itens do mapa deverão ser mantidos em ordem decrescente dos valores nos contadores. Abaixo são apresentadas as estruturas de dados que devem ser utilizadas e as operações que devem ser implementadas minimamente. O TAD deverá ser criado em arquivo de código separado (Mapa.c) e o arquivo de include correspondente (Mapa.h) também deverá ser disponibilizado. A alocação do vetor de ponteiros (Item** lista) deverá ser feita dinamicamente em blocos de 10 ponteiros por vez. A alocação do espaço para cada string deverá ser exatamente do seu tamanho. Faça um pequeno programa (main.c) para testar as operações implementadas.
 
 ```c
 typedef struct _mapa
