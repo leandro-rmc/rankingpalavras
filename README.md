@@ -46,7 +46,8 @@ void libera_mapa (Mapa * mp); // libera o espaço ocupado pelo mapa
 int tamanho_mapa (Mapa * mp); // retorna número de itens no mapa
 
 void le_termo (Mapa * mp, int i, char *t, int *c); //retorna em ‘t’ o termo no índice  'i'
-//e em  'c' o seu contador```
+//e em  'c' o seu contador
+```
 
 2. Utilizando o TAD Mapa, crie um programa que exiba o ranking (contagem em ordem decrescente) das palavras de um arquivo texto especificado pelo usuário. Veja abaixo como deve ser a interface (mínima) do programa.
 
