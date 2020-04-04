@@ -2,7 +2,9 @@
 
 Neste período de quarentena, estou aproveitando para estudar, e aproveitei para adiantar um dos trabalhos de Estrutura de Dados I, que encontrei no grupo. Não se sabe se esse trabalho também será passado para minha turma, pois as aulas foram interrompidas antes do trabalho ser escolhido, mas fazê-lo me proporcionará mais experiência. Possuo uma certa experiência com algoritmos, manipulação de memória, Assembly x86, entre outros. Não tenho muita experiência direta anterior em Estrutura de Dados, mas o conteúdo é facilmente absorvido por quem já tem experiência nesses assuntos mencionados anteriormente.
 
-No momento, apenas a primeira metade do trabalho está pronta (todas as funções do TAD Mapa), mas assim que possível vou terminar a outra parte, que é usar o TAD para criar um Ranking de Palavras. Também pretendo refatorar o TAD futuramente com o intuito de melhorar a legibilidade. O trabalho foi feito do zero, sem qualquer tipo de auxílio lógico. 
+No momento, apenas a primeira metade do trabalho está pronta (todas as funções do TAD Mapa), mas assim que possível vou terminar a outra parte, que é usar o TAD para criar um Ranking de Palavras. Também pretendo refatorar o TAD com o intuito de melhorar a legibilidade, eliminar algumas duplicidades, etc. 
+
+O trabalho foi feito do zero, sem qualquer tipo de auxílio. Não que esteja perfeito, não acho que esteja bom o suficiente, mas eu não tenho prática de "espiar" a lógica de outras pessoas, a não ser que seja com o intuito de estudar sobre o assunto, o que não é o caso quando se trata de fazer um trabalho, pois o objetivo é demonstrar o atual nível de conhecimento.
 
 Algumas assinaturas das funções do trabalho da Dilza foram alteradas por mim, como tipos de retorno "void" sendo alterados para "int" para retornarem códigos de erro, caso a operação falhe (não encontre uma palavra, por exemplo). Uma função de verificar a existência de uma determinada palavra também foi criada.
 
