@@ -162,7 +162,8 @@ int le_termo (Mapa * mp, int i, char *t, int *c){
     //Retorna -1 em casos de índice inválido
     if (i >= mp->total)
         return -1;
-    strcpy(t,mp->lista[i]->termo);
+    if (t != NULL)
+        strcpy(t,mp->lista[i]->termo);
     *c = mp->lista[i]->conta;
     return 1;
 }

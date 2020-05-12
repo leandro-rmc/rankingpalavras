@@ -1,28 +1,31 @@
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include "Ranking.h"
 #include "Mapa.h"
+#define TAMANHO_MAXIMO_PALAVRA_ARQUIVO 50
+#define SEPARADOR_PALAVRAS_ARQUIVO '\n'
 
 //Move o ponteiro interno do arquivo para o início da próxima palavra
 static void movPtrProxPalavraVocabulario(Ranking *ranking, FILE *arquivo){
     char temp;
     while (fscanf(arquivo,"%c",&temp) != EOF){
-        if (temp == ranking->rankingConfig->separador_palavras)
+        if (temp == SEPARADOR_PALAVRAS_ARQUIVO)
             break;
     }
 }
 //Absorve 1 palavra do arquivo
 static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
     int parar = 0, i, resultado = 1;
-    char *palavraAtual = malloc(sizeof(char) * ranking->rankingConfig->maximo_caracteres + 1);
+    char *palavraAtual = malloc(sizeof(char) * TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1);
     //printf("Teste");
-    for (i = 0; i <= ranking->rankingConfig->maximo_caracteres - 2; i++){
+    for (i = 0; i <= TAMANHO_MAXIMO_PALAVRA_ARQUIVO - 2; i++){
         if (fscanf(arquivo,"%c",&palavraAtual[i]) == EOF){
             parar = 1;
             resultado = 0;
         }
         //printf("0");
-        if (palavraAtual[i] == ranking->rankingConfig->separador_palavras)
+        if (palavraAtual[i] == SEPARADOR_PALAVRAS_ARQUIVO)
             parar = 1;
         if (parar == 1){
             palavraAtual[i] = '\0';
@@ -30,7 +33,7 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
         }
         //Se a variável de iteração tiver chegado ao seu fim, mas a palavra a ser lida do vocabulário...
         //... não, o ponteiro interno do arquivo precisa ser movido para a próxima palavra.
-        if (i == ranking->rankingConfig->maximo_caracteres - 2 && palavraAtual[i] != '\0'){
+        if (i == TAMANHO_MAXIMO_PALAVRA_ARQUIVO - 2 && palavraAtual[i] != '\0'){
             movPtrProxPalavraVocabulario(ranking, arquivo);
         }
     }
@@ -68,9 +71,8 @@ void inicia_ranking(Ranking *ranking){
 
     //Refatorar para remover o Hardcode
     ranking->rankingConfig = malloc(sizeof(RankingConfig));
-    ranking->rankingConfig->separador_palavras = '\n';
-    ranking->rankingConfig->minimo_caracteres = 1;
-    ranking->rankingConfig->maximo_caracteres = 50;
+    ranking->rankingConfig->minimo_intervalo = 1;
+    ranking->rankingConfig->maximo_intervalo = INT_MAX;
 }
 //Procura pelo arquivo com nome passado e obtém todas as palavras dele
 int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
@@ -98,4 +100,27 @@ int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     fclose(arquivo);
     scanf("%c",&temp);
     return 1;
+}
+
+void imprimir_ranking(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
+    char palavra[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
+    int quantidade, i;
+    for (i = 0; i<= ranking->mapa->total - 1; i++){
+        le_termo(ranking->mapa,i,palavra,&quantidade);
+        if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo)
+            printf("%s - %i\n", palavra, quantidade);
+    }
+}
+
+void obter_quantidade(Ranking *ranking, int *total_repetindo, int *total_diferente, int intevalo_minimo, int intervalo_maximo){
+    int quantidade, i, _total_repetindo = 0, _total_diferente = 0;
+    for (i = 0; i<= ranking->mapa->total - 1; i++){
+        le_termo(ranking->mapa,i,NULL,&quantidade);
+        if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo){
+            _total_repetindo += quantidade;
+            _total_diferente++;
+        }
+    }
+    *total_repetindo = _total_repetindo;
+    *total_diferente = _total_diferente;
 }
