@@ -22,13 +22,11 @@ static void movPtrProxPalavraVocabulario(Ranking *ranking, FILE *arquivo){
 static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
     int parar = 0, i, resultado = 1;
     char *palavraAtual = malloc(sizeof(char) * TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1);
-    //printf("Teste");
     for (i = 0; i <= TAMANHO_MAXIMO_PALAVRA_ARQUIVO - 2; i++){
         if (fscanf(arquivo,"%c",&palavraAtual[i]) == EOF){
             parar = 1;
             resultado = 0;
         }
-        //printf("0");
         if (palavraAtual[i] == SEPARADOR_PALAVRAS_ARQUIVO)
             parar = 1;
         if (parar == 1){
@@ -44,7 +42,6 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
     palavraAtual[i + 1] = '\0';
     palavraAtual = realloc(palavraAtual, strlen(palavraAtual) + 1);
     insere_termo(ranking->mapa,palavraAtual);
-    printf("%s",palavraAtual);
     return resultado;
 }
 //Limpa o Ranking para ser usado novamente do zero (configurações permanecem)
@@ -62,16 +59,19 @@ void libera_ranking(Ranking *ranking){
 }
 Ranking* obter_ranking(){
     Ranking *ranking = malloc(sizeof(Ranking));
+    ranking->rankingConfig = NULL;
+    ranking->mapa = NULL;
+    ranking->nome_arquivo = NULL;
     inicia_ranking(ranking);
     return ranking;
 }
 void inicia_ranking(Ranking *ranking){
     free(ranking->mapa);
     free(ranking->rankingConfig);
+    free(ranking->nome_arquivo);
 
     ranking->mapa = malloc(sizeof(Mapa));
     inicia_mapa(ranking->mapa);
-    ranking->nome_arquivo = NULL;
 
     //Refatorar para remover o Hardcode
     ranking->rankingConfig = malloc(sizeof(RankingConfig));
@@ -102,18 +102,34 @@ int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     limpar_ranking(ranking);
     while(absorver_palavra_arquivo(ranking,arquivo) == 1){};
     fclose(arquivo);
-    scanf("%c",&temp);
     return 1;
 }
 
-void imprimir_ranking(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
-    char palavra[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
+//Retornando uma estrutura de palavras é melhor porque dá para juntar o obter_quantidade e imprimir_ranking em uma coisa só
+//Do jeito que está, primeiro precisa percorrer todas as palavras para obter a quantidade total, depois percorrer tudo...
+//...de novo para obter os nomes e suas respectivas quantidades.
+
+Palavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
+    char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
+    Palavras *palavras = malloc(sizeof(Palavras));
+    Palavra *palavra;
+    palavras->total_repetindo = 0;
+    palavras->total_diferente = 0;
+    palavras->palavras = malloc(tamanho_mapa(ranking->mapa) * sizeof(Palavra*));
     int quantidade, i;
     for (i = 0; i<= ranking->mapa->total - 1; i++){
-        le_termo(ranking->mapa,i,palavra,&quantidade);
-        if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo)
-            printf("%s - %i\n", palavra, quantidade);
+        le_termo(ranking->mapa,i,palavraAtual,&quantidade);
+        if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo){
+            palavra = malloc(sizeof(Palavra));
+            palavra->quantidade = quantidade;
+            palavra->palavra = malloc(TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1);
+            strcpy(palavra->palavra, palavraAtual);
+            palavras->palavras[palavras->total_diferente] = palavra;
+            palavras->total_diferente++;
+            palavras->total_repetindo += quantidade;
+        }
     }
+    return palavras;
 }
 
 void obter_quantidade(Ranking *ranking, int *total_repetindo, int *total_diferente, int intevalo_minimo, int intervalo_maximo){
