@@ -54,8 +54,7 @@ static void desfragmenta_mapa (Mapa *mp, int indiceNulo){
 static void adiciona_item_diretamente (Mapa *mp, int indice, char *s){
     //Adiciona um item em um dado índice, sem qualquer tipo de verificação.
     mp->lista[indice] = malloc(sizeof(Item));
-    mp->lista[indice]->conta++;
-    mp->lista[indice]->termo = malloc(strlen(s));
+    mp->lista[indice]->termo = malloc(strlen(s) + 1);
     strcpy(mp->lista[indice]->termo, s);
     mp->lista[indice]->conta = 1;
     mp->total++;
