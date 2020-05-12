@@ -5,6 +5,10 @@
 #include "Mapa.h"
 #define TAMANHO_MAXIMO_PALAVRA_ARQUIVO 50
 #define SEPARADOR_PALAVRAS_ARQUIVO '\n'
+#define MINIMO_INTERVALO_PADRAO 1
+//Uma mudança no tipo de dado da quantidade na estrutura do Mapa poderá quebrar o código abaixo
+//O certo seria obter o tipo de dados dela ao invés de tratar sempre como inteiro
+#define MAXIMO_INTERVALO_PADRAO INT_MAX
 
 //Move o ponteiro interno do arquivo para o início da próxima palavra
 static void movPtrProxPalavraVocabulario(Ranking *ranking, FILE *arquivo){
@@ -71,8 +75,8 @@ void inicia_ranking(Ranking *ranking){
 
     //Refatorar para remover o Hardcode
     ranking->rankingConfig = malloc(sizeof(RankingConfig));
-    ranking->rankingConfig->minimo_intervalo = 1;
-    ranking->rankingConfig->maximo_intervalo = INT_MAX;
+    ranking->rankingConfig->minimo_intervalo = MINIMO_INTERVALO_PADRAO;
+    ranking->rankingConfig->maximo_intervalo = MAXIMO_INTERVALO_PADRAO;
 }
 //Procura pelo arquivo com nome passado e obtém todas as palavras dele
 int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
@@ -81,7 +85,7 @@ int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
 
     //Arquivo existe ou deu erro ao abrir?
     if(arquivo == NULL){
-        printf("Nao encontrado.\n");
+        printf("Nao encontrado. %i\n",MAXIMO_INTERVALO_PADRAO);
         return -1;
     }
     char temp;
