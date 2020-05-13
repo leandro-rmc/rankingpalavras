@@ -47,67 +47,55 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
 //Limpa o Ranking para ser usado novamente do zero (configurações permanecem)
 void limpar_ranking(Ranking *ranking){
     ranking->nome_arquivo = NULL;
-    if (ranking->mapa != NULL)
+    if (ranking->status != 0)
         libera_mapa(ranking->mapa);
     ranking->mapa = malloc(sizeof(Mapa));
     inicia_mapa(ranking->mapa);
-}
-void libera_ranking(Ranking *ranking){
-    limpar_ranking(ranking);
-    free(ranking->mapa);
-    free(ranking);
 }
 Ranking* obter_ranking(){
     Ranking *ranking = malloc(sizeof(Ranking));
     ranking->rankingConfig = NULL;
     ranking->mapa = NULL;
     ranking->nome_arquivo = NULL;
-    inicia_ranking(ranking);
-    return ranking;
-}
-void inicia_ranking(Ranking *ranking){
-    free(ranking->mapa);
-    free(ranking->rankingConfig);
-    free(ranking->nome_arquivo);
 
+    ranking->status = 0;
     ranking->mapa = malloc(sizeof(Mapa));
     inicia_mapa(ranking->mapa);
 
-    //Refatorar para remover o Hardcode
     ranking->rankingConfig = malloc(sizeof(RankingConfig));
     ranking->rankingConfig->minimo_intervalo = MINIMO_INTERVALO_PADRAO;
     ranking->rankingConfig->maximo_intervalo = MAXIMO_INTERVALO_PADRAO;
+
+    return ranking;
 }
 //Procura pelo arquivo com nome passado e obtém todas as palavras dele
 int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     FILE *arquivo = fopen(nome_arquivo, "r+");
+    if (ranking->status != 0)
+        free(ranking->nome_arquivo);
     ranking->nome_arquivo = NULL;
+    ranking->status = 0;
 
     //Arquivo existe ou deu erro ao abrir?
-    if(arquivo == NULL){
-        printf("Nao encontrado. %i\n",MAXIMO_INTERVALO_PADRAO);
+    if(arquivo == NULL)
         return -1;
-    }
     char temp;
 
     //Arquivo vazio?
     if (fscanf(arquivo, "%c", &temp) == EOF){
-        printf("Arquivo vazio.\n");
         return -1;
     }
     rewind(arquivo);
+
     //Guarda o nome do arquivo
     ranking->nome_arquivo = malloc(strlen(nome_arquivo));
     strcpy(ranking->nome_arquivo, nome_arquivo);
     limpar_ranking(ranking);
     while(absorver_palavra_arquivo(ranking,arquivo) == 1){};
     fclose(arquivo);
+    ranking->status = 1;
     return 1;
 }
-
-//Retornando uma estrutura de palavras é melhor porque dá para juntar o obter_quantidade e imprimir_ranking em uma coisa só
-//Do jeito que está, primeiro precisa percorrer todas as palavras para obter a quantidade total, depois percorrer tudo...
-//...de novo para obter os nomes e suas respectivas quantidades.
 
 Palavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
     char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
@@ -130,17 +118,4 @@ Palavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int in
         }
     }
     return palavras;
-}
-
-void obter_quantidade(Ranking *ranking, int *total_repetindo, int *total_diferente, int intevalo_minimo, int intervalo_maximo){
-    int quantidade, i, _total_repetindo = 0, _total_diferente = 0;
-    for (i = 0; i<= ranking->mapa->total - 1; i++){
-        le_termo(ranking->mapa,i,NULL,&quantidade);
-        if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo){
-            _total_repetindo += quantidade;
-            _total_diferente++;
-        }
-    }
-    *total_repetindo = _total_repetindo;
-    *total_diferente = _total_diferente;
 }

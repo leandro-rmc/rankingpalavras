@@ -11,6 +11,8 @@ typedef struct _rankingConfig{
 typedef struct _ranking{
 	Mapa *mapa;
 	char *nome_arquivo;
+	int status; // usar enum depois
+	//0 = sem palavras, 1 = com palavras
 	RankingConfig *rankingConfig;
 } Ranking;
 
@@ -33,5 +35,8 @@ void limpar_ranking(Ranking *ranking);
 void libera_ranking(Ranking *ranking);
 void imprimir_ranking(Ranking *ranking, int intevalo_minimo, int intervalo_maximo);
 Palavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo);
-void obter_quantidade(Ranking *ranking, int *total_repetindo, int *total_diferente, int intevalo_minimo, int intervalo_maximo);
+
+//void libera_palavras(Palavras palavras); //Importante após cada busca! Prefiro fazer static e de forma automatica pelo obter_palavras_filtradas
+//Ou criar uma função pro usuário usar
+
 #endif // RANKING_H_INCLUDED
