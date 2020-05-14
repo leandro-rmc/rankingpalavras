@@ -6,7 +6,7 @@
 
 Ranking *ranking;
 char nome_arquivo[256+1];
-Palavras *palavras;
+ContainerPalavras *container_palavras;
 
 void enter_para_continuar(){
     printf("\n- Aperte ENTER para continuar...");
@@ -29,15 +29,15 @@ void opcao_ler_arquivo(){
 }
 
 void opcao_exibir_palavras(){
-    if (ranking->status == 0) return;
-    palavras = obter_palavras_filtradas(ranking, ranking->rankingConfig->minimo_intervalo, ranking->rankingConfig->maximo_intervalo);
-    printf("\nTotal (includindo repetidas): %i\n",palavras->total_repetindo);
-    printf("Total (sem repetição): %i\n\n",palavras->total_diferente);
+    if (ranking->status == SemArquivo) return;
+    container_palavras = obter_palavras_filtradas(ranking, ranking->rankingConfig->minimo_intervalo, ranking->rankingConfig->maximo_intervalo);
+    printf("\nTotal (includindo repetidas): %i\n",container_palavras->total_repetindo);
+    printf("Total (sem repetição): %i\n\n",container_palavras->total_diferente);
     int i;
     //printf("[Lista de Palavras - min. caracteres: %i]\n", ranking->rankingConfig->minimo_intervalo);
-    for (i = 1; i <= palavras->total_diferente; i++){
-        printf("%s - ", palavras->palavras[i-1]->palavra);
-        printf("%i\n", palavras->palavras[i-1]->quantidade);
+    for (i = 1; i <= container_palavras->total_diferente; i++){
+        printf("%s - ", container_palavras->listaSubContainerPalavra[i-1]->palavra);
+        printf("%i\n", container_palavras->listaSubContainerPalavra[i-1]->quantidade);
     }
     enter_para_continuar();
 }
@@ -49,12 +49,12 @@ int main()
     char comando;
 
     do{
-        if (ranking->status == 0)
+        if (ranking->status == SemArquivo)
             printf("Ranking vazio. Use a opção (1) para absorver palavras de um arquivo.\n\n");
         else
             printf("Lendo de \"%s\". Para atualizar, use a opção (1) novamente.\n\n", nome_arquivo);
         printf("(1) Ler arquivo / Atualizar\n");
-        if (ranking->status != 0){
+        if (ranking->status == ComArquivo){
             printf("(2) Exibir palavras\n");
             printf("(3) Exibir palavras entre um intervalo de Ranking\n");
             printf("(4) Buscar palavra\n");
@@ -73,11 +73,11 @@ int main()
                 opcao_exibir_palavras();
                 break;
             case '3':
-                if (ranking->status == 0) break;
+                if (ranking->status == SemArquivo) break;
                 printf("Teste\n");
                 break;
             case '4':
-                if (ranking->status == 0) break;
+                if (ranking->status == SemArquivo) break;
                 printf("Teste\n");
                 break;
             case '5':

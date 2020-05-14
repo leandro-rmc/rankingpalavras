@@ -47,7 +47,7 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
 //Limpa o Ranking para ser usado novamente do zero (configurações permanecem)
 void limpar_ranking(Ranking *ranking){
     ranking->nome_arquivo = NULL;
-    if (ranking->status != 0)
+    if (ranking->status == ComArquivo)
         libera_mapa(ranking->mapa);
     ranking->mapa = malloc(sizeof(Mapa));
     inicia_mapa(ranking->mapa);
@@ -58,7 +58,7 @@ Ranking* obter_ranking(){
     ranking->mapa = NULL;
     ranking->nome_arquivo = NULL;
 
-    ranking->status = 0;
+    ranking->status = SemArquivo;
     ranking->mapa = malloc(sizeof(Mapa));
     inicia_mapa(ranking->mapa);
 
@@ -71,10 +71,10 @@ Ranking* obter_ranking(){
 //Procura pelo arquivo com nome passado e obtém todas as palavras dele
 int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     FILE *arquivo = fopen(nome_arquivo, "r+");
-    if (ranking->status != 0)
+    if (ranking->status == ComArquivo)
         free(ranking->nome_arquivo);
     ranking->nome_arquivo = NULL;
-    ranking->status = 0;
+    ranking->status = SemArquivo;
 
     //Arquivo existe ou deu erro ao abrir?
     if(arquivo == NULL)
@@ -93,29 +93,29 @@ int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     limpar_ranking(ranking);
     while(absorver_palavra_arquivo(ranking,arquivo) == 1){};
     fclose(arquivo);
-    ranking->status = 1;
+    ranking->status = ComArquivo;
     return 1;
 }
 
-Palavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
+ContainerPalavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
     char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
-    Palavras *palavras = malloc(sizeof(Palavras));
-    Palavra *palavra;
-    palavras->total_repetindo = 0;
-    palavras->total_diferente = 0;
-    palavras->palavras = malloc(tamanho_mapa(ranking->mapa) * sizeof(Palavra*));
+    ContainerPalavras *container_palavras = malloc(sizeof(ContainerPalavras));
+    SubContainerPalavra *sub_container_palavra;
+    container_palavras->total_repetindo = 0;
+    container_palavras->total_diferente = 0;
+    container_palavras->listaSubContainerPalavra = malloc(tamanho_mapa(ranking->mapa) * sizeof(SubContainerPalavra*));
     int quantidade, i;
     for (i = 0; i<= ranking->mapa->total - 1; i++){
         le_termo(ranking->mapa,i,palavraAtual,&quantidade);
         if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo){
-            palavra = malloc(sizeof(Palavra));
-            palavra->quantidade = quantidade;
-            palavra->palavra = malloc(TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1);
-            strcpy(palavra->palavra, palavraAtual);
-            palavras->palavras[palavras->total_diferente] = palavra;
-            palavras->total_diferente++;
-            palavras->total_repetindo += quantidade;
+            sub_container_palavra = malloc(sizeof(SubContainerPalavra));
+            sub_container_palavra->quantidade = quantidade;
+            sub_container_palavra->palavra = malloc(TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1);
+            strcpy(sub_container_palavra->palavra, palavraAtual);
+            container_palavras->listaSubContainerPalavra[container_palavras->total_diferente] = sub_container_palavra;
+            container_palavras->total_diferente++;
+            container_palavras->total_repetindo += quantidade;
         }
     }
-    return palavras;
+    return container_palavras;
 }
