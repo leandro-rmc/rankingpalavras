@@ -75,7 +75,7 @@ void opcao_exibir_palavra_buscada(){
     sub_container_palavra = buscar_palavra_filtrada(ranking, MINIMO_INTERVALO_PADRAO, MAXIMO_INTERVALO_PADRAO, palavra);
     free(palavra);
     if (sub_container_palavra->quantidade == 0){
-        printf("Palavra não encontrada!\n");
+        printf("\nPalavra não encontrada!\n");
         enter_para_continuar();
         return;
     }
@@ -100,7 +100,7 @@ void opcao_definir_limite_minimo_caracteres(){
 
 int main()
 {
-    printf("["NOME_PROGRAMA " - v" VERSAO_PROGRAMA " - By: " CRIADOR_PROGRAMA "]\n\n");
+    printf("["NOME_PROGRAMA " - v" VERSAO_PROGRAMA " - By: " CRIADOR_PROGRAMA "]\n");
     setlocale(LC_ALL,"");
     ranking = obter_ranking();
     char comando;
@@ -143,7 +143,7 @@ int main()
                 enter_para_continuar();
                 return 0;
         }
-      printf("\n\n______________________________________________________________________________\n\n\n");
+      printf("\n______________________________________________________________________________\n\n");
     } while(1);
     return 0;
 }
