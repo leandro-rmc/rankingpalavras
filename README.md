@@ -6,7 +6,7 @@ O trabalho foi feito do zero, sem auxílio. Não está perfeito, mas não tenho 
 
 O funcionamento é simples: o executável deve estar no mesmo diretório do arquivo de texto. O programa "absorverá" as palavras encontradas no arquivo (separadas por espaço ou por quebra de linha) cujo nome é passado pelo usuário, e as jogará na estrutura Mapa, onde ficarão até que o usuário decida atualizar ou absorver palavras de outro arquivo. Toda manipulação é feita em cima do conteúdo dessa estrutura; o arquivo é aberto uma única vez ou manualmente sempre que o usuário quiser.
 
-![Interface do programa criado](https://user-images.githubusercontent.com/36391793/82128752-ccca0600-9793-11ea-8edd-5b8a5e733d35.png)
+![Interface do programa criado](https://user-images.githubusercontent.com/36391793/82130501-4e289500-97a2-11ea-95f8-11d2b2cabd12.png)
 
 
 ## Detalhes do trabalho proposto (Texto e imagem abaixo de Dilza Schwartzman*)
