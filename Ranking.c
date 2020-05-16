@@ -1,14 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 #include "Ranking.h"
 #include "Mapa.h"
-#define TAMANHO_MAXIMO_PALAVRA_ARQUIVO 50
-#define SEPARADOR_PALAVRAS_ARQUIVO '\n'
-#define MINIMO_INTERVALO_PADRAO 1
-//Uma mudança no tipo de dado da quantidade na estrutura do Mapa poderá quebrar o código abaixo
-//O certo seria obter o tipo de dados dela ao invés de tratar sempre como inteiro
-#define MAXIMO_INTERVALO_PADRAO INT_MAX
 
 //Move o ponteiro interno do arquivo para o início da próxima palavra
 static void movPtrProxPalavraVocabulario(Ranking *ranking, FILE *arquivo){
@@ -44,9 +37,19 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
     insere_termo(ranking->mapa,palavraAtual);
     return resultado;
 }
+int obter_status_ranking(Ranking *ranking){
+    return ranking->status;
+};
+int obter_minimo_caracteres_ranking(Ranking *ranking){
+    return ranking->minimo_caracteres;
+}
+void definir_limites_caractere_ranking(Ranking *ranking, int minimo_caracteres){
+    ranking->minimo_caracteres = minimo_caracteres;
+}
 //Limpa o Ranking para ser usado novamente do zero (configurações permanecem)
 void limpar_ranking(Ranking *ranking){
     ranking->nome_arquivo = NULL;
+    //ranking->minimo_caracteres = MINIMO_CARACTERES_PADRAO;
     if (ranking->status == ComArquivo)
         libera_mapa(ranking->mapa);
     ranking->mapa = malloc(sizeof(Mapa));
@@ -54,17 +57,13 @@ void limpar_ranking(Ranking *ranking){
 }
 Ranking* obter_ranking(){
     Ranking *ranking = malloc(sizeof(Ranking));
-    ranking->rankingConfig = NULL;
     ranking->mapa = NULL;
     ranking->nome_arquivo = NULL;
 
+    ranking->minimo_caracteres = MINIMO_CARACTERES_PADRAO;
     ranking->status = SemArquivo;
     ranking->mapa = malloc(sizeof(Mapa));
     inicia_mapa(ranking->mapa);
-
-    ranking->rankingConfig = malloc(sizeof(RankingConfig));
-    ranking->rankingConfig->minimo_intervalo = MINIMO_INTERVALO_PADRAO;
-    ranking->rankingConfig->maximo_intervalo = MAXIMO_INTERVALO_PADRAO;
 
     return ranking;
 }
@@ -97,6 +96,22 @@ int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     return 1;
 }
 
+SubContainerPalavra* buscar_palavra_filtrada(Ranking *ranking, int intevalo_minimo, int intervalo_maximo, char *palavra){
+    char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
+    SubContainerPalavra *sub_container_palavra = malloc(sizeof(SubContainerPalavra));
+    int quantidade, id_termo;
+    id_termo = encontra_termo(ranking->mapa, palavra);
+    if (id_termo == -1)
+        sub_container_palavra->quantidade = 0;
+    else{
+        le_termo(ranking->mapa, id_termo, palavraAtual, &quantidade);
+        sub_container_palavra->quantidade = quantidade;
+        sub_container_palavra->palavra = malloc(strlen(palavraAtual) + 1);
+        strcpy(sub_container_palavra->palavra, palavraAtual);
+    }
+    return sub_container_palavra;
+}
+
 ContainerPalavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
     char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
     ContainerPalavras *container_palavras = malloc(sizeof(ContainerPalavras));
@@ -107,7 +122,7 @@ ContainerPalavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minim
     int quantidade, i;
     for (i = 0; i<= ranking->mapa->total - 1; i++){
         le_termo(ranking->mapa,i,palavraAtual,&quantidade);
-        if (quantidade >= intevalo_minimo && quantidade <= intervalo_maximo){
+        if ((quantidade >= intevalo_minimo && quantidade <= intervalo_maximo) && strlen(palavraAtual) >= obter_minimo_caracteres_ranking(ranking)){
             sub_container_palavra = malloc(sizeof(SubContainerPalavra));
             sub_container_palavra->quantidade = quantidade;
             sub_container_palavra->palavra = malloc(TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1);
