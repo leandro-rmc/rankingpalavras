@@ -3,11 +3,11 @@
 #include "Ranking.h"
 #include "Mapa.h"
 
-//Move o ponteiro interno do arquivo para o início da próxima palavra
-static void movPtrProxPalavraVocabulario(Ranking *ranking, FILE *arquivo){
+//Move o ponteiro interno para o próximo espaço ou quebra de linha
+static void movPtrProxSeparador(Ranking *ranking, FILE *arquivo){
     char temp;
     while (fscanf(arquivo,"%c",&temp) != EOF){
-        if (temp == SEPARADOR_PALAVRAS_ARQUIVO)
+        if (temp == ' ' || temp == '\n')
             break;
     }
 }
@@ -20,7 +20,7 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
             parar = 1;
             resultado = 0;
         }
-        if (palavraAtual[i] == SEPARADOR_PALAVRAS_ARQUIVO)
+        if (palavraAtual[i] == ' ' || palavraAtual[i] == '\n')
             parar = 1;
         if (parar == 1){
             palavraAtual[i] = '\0';
@@ -29,12 +29,17 @@ static int absorver_palavra_arquivo(Ranking *ranking, FILE *arquivo){
         //Se a variável de iteração tiver chegado ao seu fim, mas a palavra a ser lida do vocabulário...
         //... não, o ponteiro interno do arquivo precisa ser movido para a próxima palavra.
         if (i == TAMANHO_MAXIMO_PALAVRA_ARQUIVO - 2 && palavraAtual[i] != '\0'){
-            movPtrProxPalavraVocabulario(ranking, arquivo);
+            movPtrProxSeparador(ranking, arquivo);
         }
     }
     palavraAtual[i + 1] = '\0';
-    palavraAtual = realloc(palavraAtual, strlen(palavraAtual) + 1);
-    insere_termo(ranking->mapa,palavraAtual);
+    //Adaptação do algorítmo para evitar a entrada de palavras nulas
+    if (palavraAtual[0] == '\0')
+        free(palavraAtual);
+    else{
+        palavraAtual = realloc(palavraAtual, strlen(palavraAtual) + 1);
+        insere_termo(ranking->mapa,palavraAtual);
+    }
     return resultado;
 }
 int obter_status_ranking(Ranking *ranking){
@@ -43,13 +48,17 @@ int obter_status_ranking(Ranking *ranking){
 int obter_minimo_caracteres_ranking(Ranking *ranking){
     return ranking->minimo_caracteres;
 }
-void definir_limites_caractere_ranking(Ranking *ranking, int minimo_caracteres){
-    ranking->minimo_caracteres = minimo_caracteres;
+int definir_limites_caractere_ranking(Ranking *ranking, int minimo_caracteres){
+    if (minimo_caracteres > 0){
+        ranking->minimo_caracteres = minimo_caracteres;
+        return 1;
+    }
+    else
+        return -1;
 }
 //Limpa o Ranking para ser usado novamente do zero (configurações permanecem)
 void limpar_ranking(Ranking *ranking){
     ranking->nome_arquivo = NULL;
-    //ranking->minimo_caracteres = MINIMO_CARACTERES_PADRAO;
     if (ranking->status == ComArquivo)
         libera_mapa(ranking->mapa);
     ranking->mapa = malloc(sizeof(Mapa));
@@ -96,6 +105,7 @@ int absorver_palavras_arquivo(Ranking *ranking, char *nome_arquivo){
     return 1;
 }
 
+//Responsável por buscar uma única palavra e jogá-la em uma estrutura
 SubContainerPalavra* buscar_palavra_filtrada(Ranking *ranking, int intevalo_minimo, int intervalo_maximo, char *palavra){
     char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
     SubContainerPalavra *sub_container_palavra = malloc(sizeof(SubContainerPalavra));
@@ -112,6 +122,7 @@ SubContainerPalavra* buscar_palavra_filtrada(Ranking *ranking, int intevalo_mini
     return sub_container_palavra;
 }
 
+//Responsável por percorrer o mapa e jogar as palavras dentro de uma estrutura
 ContainerPalavras* obter_palavras_filtradas(Ranking *ranking, int intevalo_minimo, int intervalo_maximo){
     char palavraAtual[TAMANHO_MAXIMO_PALAVRA_ARQUIVO + 1];
     ContainerPalavras *container_palavras = malloc(sizeof(ContainerPalavras));

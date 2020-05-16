@@ -1,7 +1,6 @@
 #include "Mapa.h"
 #include <stdlib.h>
 #include <string.h>
-#define TAMANHO_GRUPO_ITENS 10
 
 static void reorganiza_item_diretamente (Mapa *mp, int indice){
 

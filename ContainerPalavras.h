@@ -12,4 +12,7 @@ typedef struct ContainerPalavras{
     SubContainerPalavra **listaSubContainerPalavra;
 } ContainerPalavras;
 
+void liberar_conteudo_sub_container_palavra(SubContainerPalavra *sub_container_palavra);
+void liberar_conteudo_container_palavras(ContainerPalavras *container_palavras);
+
 #endif // CONTAINERPALAVRAS_H_INCLUDED

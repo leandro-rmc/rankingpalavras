@@ -3,30 +3,35 @@
 #include <locale.h>
 #include "Mapa.h"
 #include "Ranking.h"
+#include "ContainerPalavras.h"
+
+#define NOME_PROGRAMA "Ranking de Palavras"
+#define VERSAO_PROGRAMA "0.1"
+#define CRIADOR_PROGRAMA "Leandro Rocha Musser Carneiro"
+//Ranking de Palavras - v0.1 - By: Leandro Rocha Musser Carneiro
 
 Ranking *ranking;
 char nome_arquivo[256+1];
-ContainerPalavras *container_palavras;
 
 void enter_para_continuar(){
     fflush(stdin);
     printf("\n- Aperte ENTER para continuar...");
     getchar();
     fflush(stdin);
-    //system("cls");
 }
 
 void exibir_palavras(int intervalo_minimo, int intervalo_maximo){
+    ContainerPalavras *container_palavras;
     container_palavras = obter_palavras_filtradas(ranking, intervalo_minimo, intervalo_maximo);
     printf("\nTotal (includindo repetidas): %i\n",container_palavras->total_repetindo);
     printf("Total (sem repetição): %i\n",container_palavras->total_diferente);
     int i;
     printf("\n[Nome - Quantidade]\n\n");
-    //printf("[Lista de Palavras - min. caracteres: %i]\n", ranking->rankingConfig->minimo_intervalo);
     for (i = 1; i <= container_palavras->total_diferente; i++){
         printf("%s - ", container_palavras->listaSubContainerPalavra[i-1]->palavra);
         printf("%i\n", container_palavras->listaSubContainerPalavra[i-1]->quantidade);
     }
+    liberar_conteudo_container_palavras(container_palavras);
 }
 
 void opcao_ler_arquivo(){
@@ -35,7 +40,6 @@ void opcao_ler_arquivo(){
     fflush(stdin);
     if(absorver_palavras_arquivo(ranking, nome_arquivo) == -1){
         printf("\nErro ao absorver as palavras do arquivo \"%s\"! Verifique se o arquivo existe ou se está vazio.\n", nome_arquivo);
-        //exit(0);
     }
     else{
         printf("\nArquivo %s absorvido com sucesso!\n", nome_arquivo);
@@ -61,16 +65,6 @@ void opcao_exibir_palavras_intervalo(){
     enter_para_continuar();
 }
 
-void opcao_definir_limite_minimo_caracteres(){
-    int minimo_caracteres;
-    printf("- Número mínimo de caracteres a se considerar: ");
-    scanf("%i", &minimo_caracteres);
-    fflush(stdin);
-    definir_limites_caractere_ranking(ranking, minimo_caracteres);
-    printf("\nModificado com sucesso!\n");
-    enter_para_continuar();
-}
-
 void opcao_exibir_palavra_buscada(){
     if (obter_status_ranking(ranking) == SemArquivo) return;
     char *palavra = malloc(sizeof(char) * 256 + 1);
@@ -88,11 +82,25 @@ void opcao_exibir_palavra_buscada(){
     printf("\n[Nome - Quantidade]\n");
     printf("\n%s - ", sub_container_palavra->palavra);
     printf("%i\n", sub_container_palavra->quantidade);
+    liberar_conteudo_sub_container_palavra(sub_container_palavra);
+    enter_para_continuar();
+}
+
+void opcao_definir_limite_minimo_caracteres(){
+    int minimo_caracteres;
+    printf("- Número mínimo de caracteres a se considerar: ");
+    scanf("%i", &minimo_caracteres);
+    fflush(stdin);
+    if (definir_limites_caractere_ranking(ranking, minimo_caracteres) == -1)
+        printf("\nValor inválido! Tamanho mínimo deve ser 1.\n");
+    else
+        printf("\nModificado com sucesso!\n");
     enter_para_continuar();
 }
 
 int main()
 {
+    printf("["NOME_PROGRAMA " - v" VERSAO_PROGRAMA " - By: " CRIADOR_PROGRAMA "]\n\n");
     setlocale(LC_ALL,"");
     ranking = obter_ranking();
     char comando;
@@ -131,14 +139,11 @@ int main()
                 opcao_definir_limite_minimo_caracteres();
                 break;
             case '6':
-                printf("Obrigado por utilizar o programa!\n");
+                printf("\nObrigado por usar o programa!\n");
+                enter_para_continuar();
                 return 0;
         }
-      printf("\n\n\n==============================================================================================================\n\n\n\n");
+      printf("\n\n______________________________________________________________________________\n\n\n");
     } while(1);
-
-    char temp;
-    printf("ENTER para finalizar...");
-    scanf("%c",&temp);
     return 0;
 }

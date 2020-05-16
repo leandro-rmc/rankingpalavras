@@ -1,5 +1,6 @@
 #ifndef MAPA_H_INCLUDED
 #define MAPA_H_INCLUDED
+#define TAMANHO_GRUPO_ITENS 10
 
 typedef struct _item
 {

@@ -2,11 +2,11 @@
 
 Neste período de quarentena, estou aproveitando para estudar, e aproveitei para adiantar um dos trabalhos de Estrutura de Dados I, que encontrei no grupo. Não se sabe se esse trabalho também será passado para minha turma, pois as aulas foram interrompidas antes do trabalho ser escolhido, mas fazê-lo me proporcionará mais experiência. Possuo uma certa experiência com algoritmos, manipulação de memória, Assembly x86, entre outros. Não tenho muita experiência direta anterior em Estrutura de Dados, mas o conteúdo é facilmente absorvido por quem já tem experiência nesses assuntos mencionados anteriormente.
 
-No momento, apenas a primeira metade do trabalho está pronta (todas as funções do TAD Mapa), mas assim que possível vou terminar a outra parte, que é usar o TAD para criar um Ranking de Palavras. Também pretendo refatorar o TAD com o intuito de melhorar a legibilidade, eliminar algumas duplicidades, etc. 
+O trabalho foi feito do zero, sem auxílio. Não está perfeito, mas não tenho prática de "espiar" o código de outras pessoas se não for para estudá-los. O objetivo do trabalho é demonstrar o atual nível de conhecimento de quem o faz.
 
-O trabalho foi feito do zero, sem qualquer tipo de auxílio. Não que esteja perfeito, não acho que esteja bom o suficiente, mas eu não tenho prática de "espiar" a lógica de outras pessoas, a não ser que seja com o intuito de estudar sobre o assunto, o que não é o caso quando se trata de fazer um trabalho, pois o objetivo é demonstrar o atual nível de conhecimento.
+O funcionamento é simples: o executável deve estar no mesmo diretório do arquivo de texto. O programa "absorverá" as palavras encontradas no arquivo (separadas por espaço ou por quebra de linha) cujo nome é passado pelo usuário, e as jogará na estrutura Mapa, onde ficarão até que o usuário decida atualizar ou absorver palavras de outro arquivo. Toda manipulação é feita em cima do conteúdo dessa estrutura; o arquivo é aberto uma única vez ou manualmente sempre que o usuário quiser.
 
-Algumas assinaturas das funções do trabalho da Dilza foram alteradas por mim, como tipos de retorno "void" sendo alterados para "int" para retornarem códigos de erro, caso a operação falhe (não encontre uma palavra, por exemplo). Uma função de verificar a existência de uma determinada palavra também foi criada.
+![Interface do programa criado](https://user-images.githubusercontent.com/36391793/82128752-ccca0600-9793-11ea-8edd-5b8a5e733d35.png)
 
 
 ## Detalhes do trabalho proposto (Texto e imagem de Dilza Schwartzman*)
