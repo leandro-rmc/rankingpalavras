@@ -9,7 +9,7 @@ O funcionamento é simples: o executável deve estar no mesmo diretório do arqu
 ![Interface do programa criado](https://user-images.githubusercontent.com/36391793/82128752-ccca0600-9793-11ea-8edd-5b8a5e733d35.png)
 
 
-## Detalhes do trabalho proposto (Texto e imagem de Dilza Schwartzman*)
+## Detalhes do trabalho proposto (Texto e imagem abaixo de Dilza Schwartzman*)
 
 1. Crie um TAD Mapa que armazenará um conjunto de palavras (strings ou cadeias de caracteres) e um contador associado a cada uma delas. Os itens do mapa deverão ser mantidos em ordem decrescente dos valores nos contadores. Abaixo são apresentadas as estruturas de dados que devem ser utilizadas e as operações que devem ser implementadas minimamente. O TAD deverá ser criado em arquivo de código separado (Mapa.c) e o arquivo de include correspondente (Mapa.h) também deverá ser disponibilizado. A alocação do vetor de ponteiros (Item** lista) deverá ser feita dinamicamente em blocos de 10 ponteiros por vez. A alocação do espaço para cada string deverá ser exatamente do seu tamanho. Faça um pequeno programa (main.c) para testar as operações implementadas.
 
