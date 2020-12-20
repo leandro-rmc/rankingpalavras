@@ -1,6 +1,6 @@
 # Ranking de Palavras - Trabalho de Estrutura de Dados I
 
-Neste período de quarentena estou aproveitando para estudar e aproveitei para adiantar um dos trabalhos de Estrutura de Dados I, que encontrei no grupo. Não se sabe se esse trabalho também será passado para minha turma no próximo período (deletei a matéria neste), pois as aulas foram interrompidas antes do trabalho ser escolhido, mas fazê-lo me proporcionará mais experiência. Possuo uma certa experiência com algoritmos, manipulação de memória, Assembly x86, entre outros. Não tenho muita experiência direta anterior em Estrutura de Dados, mas o conteúdo é facilmente absorvido por quem já tem experiência nesses assuntos mencionados anteriormente.
+Trabalho de Estrutura de Dados I que foi passado para outras turmas do meu curso. Ainda não fiz a matéria, mas fazer os trabalhos me proporcionará mais experiência. Possuo uma certa experiência com algoritmos, manipulação de memória, Assembly x86, entre outros. Não tenho muita experiência direta anterior em Estrutura de Dados, mas o conteúdo é facilmente absorvido por quem já tem experiência nesses assuntos mencionados anteriormente.
 
 O trabalho foi feito do zero, sem auxílio. Não está perfeito, mas não tenho prática de "espiar" o código de outras pessoas se não for para estudá-los. O objetivo do trabalho é demonstrar o atual nível de conhecimento de quem o faz.
 
