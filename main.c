@@ -14,17 +14,15 @@ Ranking *ranking;
 char nome_arquivo[256+1];
 
 void enter_para_continuar(){
-    fflush(stdin);
     printf("\n- Aperte ENTER para continuar...");
     getchar();
-    fflush(stdin);
 }
 
 void exibir_palavras(int intervalo_minimo, int intervalo_maximo){
     ContainerPalavras *container_palavras;
     container_palavras = obter_palavras_filtradas(ranking, intervalo_minimo, intervalo_maximo);
     printf("\nTotal (includindo repetidas): %i\n",container_palavras->total_repetindo);
-    printf("Total (sem repetição): %i\n",container_palavras->total_diferente);
+    printf("Total (sem repetiÃ§Ã£o): %i\n",container_palavras->total_diferente);
     int i;
     printf("\n[Nome - Quantidade]\n\n");
     for (i = 1; i <= container_palavras->total_diferente; i++){
@@ -35,11 +33,11 @@ void exibir_palavras(int intervalo_minimo, int intervalo_maximo){
 }
 
 void opcao_ler_arquivo(){
-    printf("- Digite o nome do arquivo: ");
+    printf("- Digite o nome do arquivo:");
     scanf("%256[^\n]s", nome_arquivo);
-    fflush(stdin);
+    getchar();
     if(absorver_palavras_arquivo(ranking, nome_arquivo) == -1){
-        printf("\nErro ao absorver as palavras do arquivo \"%s\"! Verifique se o arquivo existe ou se está vazio.\n", nome_arquivo);
+        printf("\nErro ao absorver as palavras do arquivo \"%s\"! Verifique se o arquivo existe ou se estÃ¡ vazio.\n", nome_arquivo);
     }
     else{
         printf("\nArquivo %s absorvido com sucesso!\n", nome_arquivo);
@@ -56,11 +54,11 @@ void opcao_exibir_palavras(){
 void opcao_exibir_palavras_intervalo(){
     if (obter_status_ranking(ranking) == SemArquivo) return;
     int intervalo_minimo, intervalo_maximo;
-    printf("- Intervalo mínimo: ");
+    printf("- Intervalo mÃ­nimo: ");
     scanf("%i", &intervalo_minimo);
-    printf("- Intervalo máximo: ");
+    printf("- Intervalo mÃ¡ximo: ");
     scanf("%i", &intervalo_maximo);
-    fflush(stdin);
+    getchar();
     exibir_palavras(intervalo_minimo, intervalo_maximo);
     enter_para_continuar();
 }
@@ -70,12 +68,12 @@ void opcao_exibir_palavra_buscada(){
     char *palavra = malloc(sizeof(char) * 256 + 1);
     printf("- Palavra a ser buscada: ");
     scanf("%256[^\n]s", palavra);
-    fflush(stdin);
+    getchar();
     SubContainerPalavra *sub_container_palavra;
     sub_container_palavra = buscar_palavra_filtrada(ranking, MINIMO_INTERVALO_PADRAO, MAXIMO_INTERVALO_PADRAO, palavra);
     free(palavra);
     if (sub_container_palavra->quantidade == 0){
-        printf("\nPalavra não encontrada!\n");
+        printf("\nPalavra nÃ£o encontrada!\n");
         enter_para_continuar();
         return;
     }
@@ -88,11 +86,11 @@ void opcao_exibir_palavra_buscada(){
 
 void opcao_definir_limite_minimo_caracteres(){
     int minimo_caracteres;
-    printf("- Número mínimo de caracteres a se considerar: ");
+    printf("- NÃºmero mÃ­nimo de caracteres a se considerar: ");
     scanf("%i", &minimo_caracteres);
-    fflush(stdin);
+    getchar();
     if (definir_limites_caractere_ranking(ranking, minimo_caracteres) == -1)
-        printf("\nValor inválido! Tamanho mínimo deve ser 1.\n");
+        printf("\nValor invÃ¡lido! Tamanho mÃ­nimo deve ser 1.\n");
     else
         printf("\nModificado com sucesso!\n");
     enter_para_continuar();
@@ -107,21 +105,21 @@ int main()
 
     do{
         if (obter_status_ranking(ranking) == SemArquivo)
-            printf("Ranking vazio. Use a opção (1) para absorver palavras de um arquivo.\n\n");
+            printf("Ranking vazio. Use a opÃ§Ã£o (1) para absorver palavras de um arquivo.\n\n");
         else
-            printf("Manipulando palavras absorvidas de \"%s\". Para atualizar, use a opção (1) novamente.\n\n", nome_arquivo);
+            printf("Manipulando palavras absorvidas de \"%s\". Para atualizar, use a opÃ§Ã£o (1) novamente.\n\n", nome_arquivo);
         printf("(1) Ler arquivo / Atualizar\n");
         if (obter_status_ranking(ranking) == ComArquivo){
             printf("(2) Exibir palavras\n");
-            printf("(3) Exibir palavras entre um intervalo de repetição\n");
+            printf("(3) Exibir palavras entre um intervalo de repetiÃ§Ã£o\n");
             printf("(4) Buscar palavra\n");
         }
-        printf("(5) Definir limite mínimo de caracteres (atualmente é %i)\n", obter_minimo_caracteres_ranking(ranking));
+        printf("(5) Definir limite mÃ­nimo de caracteres (atualmente Ã© %i)\n", obter_minimo_caracteres_ranking(ranking));
         printf("(6) Sair\n\n");
         printf("- Digite um comando: ");
 
         scanf("%c",&comando);
-        fflush(stdin);
+		getchar();
         switch(comando){
             case '1':
                 opcao_ler_arquivo();

@@ -6,7 +6,7 @@ void liberar_conteudo_sub_container_palavra(SubContainerPalavra *sub_container_p
 }
 void liberar_conteudo_container_palavras(ContainerPalavras *container_palavras){
     int i;
-    for (i = 0; i <= container_palavras->total_diferente; i++){
-        liberar_conteudo_sub_container_palavra(container_palavras->listaSubContainerPalavra[0]);
+    for (i = 0; i < container_palavras->total_diferente; i++){
+        liberar_conteudo_sub_container_palavra(container_palavras->listaSubContainerPalavra[i]);
     }
 }
