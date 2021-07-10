@@ -29,7 +29,7 @@ Após ter a imagem em mãos, use o seguinte comando para instanciar o container:
 ```powershell
 docker run --name ranking_palavras -it leandromusser/ranking_palavras
 ```
-Caso queira usar novamente, não esqueça de remover o container com docker container rm ranking_palavras, ou omita esse parâmetro e faça do seu jeito.
+Caso queira rodar novamente, não esqueça de remover o container com **docker container rm ranking_palavras**, ou omita o parâmetro name e faça do seu jeito.
 
 
 O diretório do programa é /RankingPalavras e o arquivo de texto deve ser enviado para lá. Para isso, eu utilizo o comando **docker cp**, que permite copiar arquivos da máquina hospedeira para dentro do container:
