@@ -34,13 +34,21 @@ void opcao_ler_arquivo(){
     printf("- Digite o nome do arquivo:");
     scanf("%256[^\n]s", nome_arquivo);
     getchar();
-    if(absorver_palavras_arquivo(ranking, nome_arquivo) == -1){
+	
+    ler_arquivo(nome_arquivo);
+	
+    enter_para_continuar();
+}
+
+int ler_arquivo(char* nome_arquivo){
+	if(absorver_palavras_arquivo(ranking, nome_arquivo) == -1){
         printf("\nErro ao absorver as palavras do arquivo \"%s\"! Verifique se o arquivo existe ou se está vazio.\n", nome_arquivo);
+		return -1;
     }
     else{
         printf("\nArquivo %s absorvido com sucesso!\n", nome_arquivo);
+		return 1;
     }
-    enter_para_continuar();
 }
 
 void opcao_exibir_palavras(){
