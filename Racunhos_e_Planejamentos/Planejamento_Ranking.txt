@@ -1,0 +1,32 @@
+struct Ranking{
+	Mapa *mapa;
+	FILE *arquivo;
+	char *nome_arquivo;
+	char separador_palavras;
+	int minimo_caracteres;
+}
+//Não inicializar o ranking aqui, apenas dentro de obter_ranking()
+
+Ranking* obter_ranking();
+
+void puxar_palavras_arquivo(Ranking *r, char *nome_arquivo, char separador_palavras, int maximo_caracteres_palavra_arquivo); //Copia caractere por caractere em um vetor longo, depois ajusta o tamanho, se necessário, depois o ponteiro interno precisa estar no início da próxima palavra automaticamente. Se a palavra for muito longa e chegar no limite de tamanho sem chegar no final dela (determinando se o próximo caractere não gera EOF ou se não é um separador_palavras, usar o mover_para_proxima_palavra());
+
+int atualizar_mapa(Ranking *r, int maximo_caracteres_palavra_arquivo) //Vai pegar o nome já existente. Retorna -1 se não tiver ou se der erro ao abrir o arquivo. Usa o puxar_palavras_arquivo e obter_nome_arquivo por debaixo dos panos
+
+//Aqui poderia retornar um vetor de palavras, mas ok
+void imprimir_ranking_completo(Ranking *r);
+void imprimir_intervalo_ranking(Ranking *r,  int min, int max);
+
+int obter_quantidade_palavra_determinada(Ranking *r, char *palavra);
+int obter_total_palavras_com_repetir(Ranking *r);
+int obter_total_palavras_sem_repetir(Ranking *r);
+char *nome_arquivo obter_nome_arquivo(Ranking *r);
+
+void determinar_minimo_caracteres(Ranking *r, int min);
+void resetar_ranking(Ranking *r);
+void liberar_ranking(Ranking *r);
+
+
+FORA DO TAD (Ranking.c, funções static auxilares):
+______________________________________________________________________________________
+void mover_para_proxima_palavra(Ranking *r); //Move o ponteiro interno para a próxima palavra, com base no separador_palavras. Usado normalmente pelo puxar_palavras_arquivo();
