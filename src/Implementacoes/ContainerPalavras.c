@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ContainerPalavras.h"
+#include "../Interfaces/ContainerPalavras.h"
 
 void liberar_conteudo_sub_container_palavra(SubContainerPalavra *sub_container_palavra){
     free(sub_container_palavra->palavra);

@@ -1,4 +1,4 @@
-#include "Mapa.h"
+#include "../Interfaces/Mapa.h"
 #include <stdlib.h>
 #include <string.h>
 

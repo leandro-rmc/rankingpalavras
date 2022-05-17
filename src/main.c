@@ -1,15 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include "Mapa.h"
-#include "Ranking.h"
-#include "ContainerPalavras.h"
+#include <string.h>
+#include "Interfaces/Mapa.h"
+#include "Interfaces/Ranking.h"
+#include "Interfaces/ContainerPalavras.h"
 
 #define NOME_PROGRAMA "Ranking de Palavras"
 #define CRIADOR_PROGRAMA "Leandro Rocha Musser Carneiro"
 
 Ranking *ranking;
 char nome_arquivo[256+1];
+
+int ler_arquivo(char* nome_arquivo){
+	if(absorver_palavras_arquivo(ranking, nome_arquivo) == -1){
+        printf("\nErro ao absorver as palavras do arquivo \"%s\"! Verifique se o arquivo existe ou se está vazio.\n", nome_arquivo);
+		return -1;
+    }
+    else{
+        printf("\nArquivo %s absorvido com sucesso!\n", nome_arquivo);
+		return 1;
+    }
+}
 
 void enter_para_continuar(){
     printf("\n- Aperte ENTER para continuar...");
@@ -38,17 +50,6 @@ void opcao_ler_arquivo(){
     ler_arquivo(nome_arquivo);
 	
     enter_para_continuar();
-}
-
-int ler_arquivo(char* nome_arquivo){
-	if(absorver_palavras_arquivo(ranking, nome_arquivo) == -1){
-        printf("\nErro ao absorver as palavras do arquivo \"%s\"! Verifique se o arquivo existe ou se está vazio.\n", nome_arquivo);
-		return -1;
-    }
-    else{
-        printf("\nArquivo %s absorvido com sucesso!\n", nome_arquivo);
-		return 1;
-    }
 }
 
 void opcao_exibir_palavras(){
@@ -102,11 +103,16 @@ void opcao_definir_limite_minimo_caracteres(){
     enter_para_continuar();
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     printf("["NOME_PROGRAMA " - By: " CRIADOR_PROGRAMA "]\n");
     setlocale(LC_ALL,"");
     ranking = obter_ranking();
+	
+	if (argc > 1){
+		ler_arquivo(argv[1]);
+	}
+	
     char comando;
 
     do{

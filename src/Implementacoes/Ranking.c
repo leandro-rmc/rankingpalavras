@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
-#include "Ranking.h"
-#include "Mapa.h"
+#include "../Interfaces/Ranking.h"
+#include "../Interfaces/Mapa.h"
 
 //Move o ponteiro interno para o próximo espaço ou quebra de linha
 static void movPtrProxSeparador(Ranking *ranking, FILE *arquivo){
