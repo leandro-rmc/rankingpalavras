@@ -6,9 +6,7 @@
 #include "ContainerPalavras.h"
 
 #define NOME_PROGRAMA "Ranking de Palavras"
-#define VERSAO_PROGRAMA "1.0.1"
 #define CRIADOR_PROGRAMA "Leandro Rocha Musser Carneiro"
-//Ranking de Palavras - v1.0.1 - By: Leandro Rocha Musser Carneiro
 
 Ranking *ranking;
 char nome_arquivo[256+1];
@@ -98,7 +96,7 @@ void opcao_definir_limite_minimo_caracteres(){
 
 int main()
 {
-    printf("["NOME_PROGRAMA " - v" VERSAO_PROGRAMA " - By: " CRIADOR_PROGRAMA "]\n");
+    printf("["NOME_PROGRAMA " - By: " CRIADOR_PROGRAMA "]\n");
     setlocale(LC_ALL,"");
     ranking = obter_ranking();
     char comando;
