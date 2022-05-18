@@ -1,0 +1,15 @@
+[150 palavras no total (min. 4 caracteres) | Obtido de "teste.txt"]
+[Banco de dados vazio. Use a opção (1)]
+
+(1) Ler arquivo / Atualizar
+(2) Exibir todas palavras
+(3) Exibir todas palavras entre um intervalo de Ranking
+(4) Buscar palavra
+(5) Definir limite mínimo de caracteres (atualmente é 4)
+(6) Sair
+
+- Digite um comando: 1
+- Nome do arquivo: teste.txt
+
+Sucesso! Aperte qualquer tecla para continuar...
+*Limpa e atualiza a tela*
