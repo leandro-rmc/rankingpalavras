@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
-#include "Interfaces/Mapa.h"
-#include "Interfaces/Ranking.h"
-#include "Interfaces/ContainerPalavras.h"
+#include "interfaces/Mapa.h"
+#include "interfaces/Ranking.h"
+#include "interfaces/ContainerPalavras.h"
 
 #define NOME_PROGRAMA "Ranking de Palavras"
 #define CRIADOR_PROGRAMA "Leandro Rocha Musser Carneiro"
