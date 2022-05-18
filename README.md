@@ -3,7 +3,7 @@
 ## O que é?
 
 
-Seu objetivo é buscar palavras dentro de um arquivo de texto e efetuar uma série de operações em memória. É um trabalho que foi passado para certas turmas de Estrutura de Dados e eu aproveitei para fazer e ganhar experiência. Foi dado um enunciado e uma série de funções que deveriam ser codificadas do zero, mas eu fui além do que foi pedido, além de mudar um pouco a arquitetura.
+Seu objetivo é buscar palavras dentro de um arquivo de texto e efetuar uma série de operações em memória. É um trabalho que foi passado para certas turmas de Estrutura de Dados e eu aproveitei para fazer e ganhar experiência. Foi dado um enunciado e uma série de assinaturas de funções que deveriam ser codificadas do zero, mas eu fui além do que foi pedido, além de mudar um pouco a arquitetura.
 
 ## Funcionamento
 
