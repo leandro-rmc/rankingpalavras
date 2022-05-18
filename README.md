@@ -2,11 +2,12 @@
 
 ## O que é?
 
-Trata-se de um trabalho de Estrutura de Dados I que foi passado para outras turmas do meu curso, feito apenas para ganhar mais experiência. O trabalho foi feito do zero e sem auxílio. Não está perfeito, mas não tenho prática de "espiar" o código de outras pessoas se não for para estudá-los. Foi dado um longo enunciado e uma série de funções que deveriam ser criadas do zero pelo aluno. A estrutura foi feita de acordo com o que foi pedido. O objetivo é buscar palavras dentro de um arquivo de texto e efetuar uma série de operações em memória.
+
+Seu objetivo é buscar palavras dentro de um arquivo de texto e efetuar uma série de operações em memória. É um trabalho que foi passado para certas turmas de Estrutura de Dados e eu aproveitei para fazer e ganhar experiência. Foi dado um enunciado e uma série de funções que deveriam ser codificadas do zero, mas eu fui além do que foi pedido, além de mudar um pouco a arquitetura.
 
 ## Funcionamento
 
-O executável deve estar no mesmo diretório de um arquivo de texto (cujo nome será passado pelo usuário quando ele quiser, sem precisar reiniciar o programa) com palavras separadas por espaço ou por quebra de linha. O programa "absorverá" essas palavras e as jogará na estrutura Mapa, onde ficarão até que o usuário decida atualizar ou absorver palavras de outro arquivo. Toda manipulação é feita em cima do conteúdo dessa estrutura; o arquivo é aberto uma única vez ou manualmente sempre que o usuário quiser. Um arquivo de texto chamado "_teste.txt" contém palavras aleatórias para facilitar o uso inicial.
+Você deve passar o caminho do arquivo de texto no momento da inicialização por argumento de linha de comando ou a qualquer momento através da interface do próprio programa. O arquivo de texto deve ter as palavras separadas por espaço ou quebra de linha. O programa "absorverá" essas palavras e as jogará na estrutura Mapa, onde ficarão até que o usuário decida atualizar ou absorver palavras de outro arquivo. Toda manipulação é feita em cima do conteúdo dessa estrutura; o arquivo é aberto uma única vez ou manualmente sempre que o usuário quiser. Um arquivo de texto chamado "bdteste.txt" contém palavras aleatórias para facilitar o uso inicial. OBS: Tenho plena ciência de que não é uma boa prática jogar o conteúdo inteiro de um arquivo para dentro da memória sem qualquer tipo de controle. Para o propósito deste programa, o ideal seria impor uma limitação ao tamanho do arquivo com as palavras. O programa não é muito recente e o estou utilizando para estudar e treinar outras coisas, como Docker e boas práticas.
 
 ## Docker
 
@@ -21,15 +22,14 @@ docker build . -t leandromusser/ranking_palavras
 
 Caso não queira fazer o clone do projeto, pode-se baixar a imagem pelo  [Docker Hub](https://hub.docker.com/r/leandromusser/ranking_palavras). usando o seguinte comando:
 ```powershell
-docker pull leandromusser/ranking_palavras
+docker pull leandromusser/ranking_palavras:latest
 ```
 
 
-Após ter a imagem em mãos, use o seguinte comando para instanciar o container:
+Após um desses dois passos, use o seguinte comando para instanciar o container:
 ```powershell
-docker run --name ranking_palavras -it leandromusser/ranking_palavras
+docker run --name ranking_palavras -it --rm leandromusser/ranking_palavras
 ```
-Caso queira rodar novamente, não esqueça de remover o container com **docker container rm ranking_palavras**, ou omita o parâmetro name e faça do seu jeito.
 
 
 O diretório do programa é /RankingPalavras e o arquivo de texto deve ser enviado para lá. Para isso, eu utilizo o comando **docker cp**, que permite copiar arquivos da máquina hospedeira para dentro do container:
