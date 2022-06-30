@@ -1,10 +1,11 @@
-FROM gcc
+FROM gcc:latest as base
 WORKDIR /RankingPalavras
 
-COPY src/Implementacoes ./Implementacoes
-COPY src/Interfaces ./Interfaces
-COPY src/main.c src/bdteste.txt .
+COPY src .
+RUN mkdir /RankingPalavras/build && gcc *.c Implementacoes/*.c Interfaces/*.h -o /RankingPalavras/build/app
 
-RUN gcc *.c Implementacoes/*.c Interfaces/*.h -o rankingPalavras
+FROM ubuntu:latest
+WORKDIR /RankingPalavras
+COPY --from=base /RankingPalavras/bdteste.txt /RankingPalavras/build .
 
-CMD ./rankingPalavras
+ENTRYPOINT ["/RankingPalavras/app"]
