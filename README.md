@@ -38,5 +38,7 @@ docker cp teste.txt ranking_palavras:/RankingPalavras
 ```
 Onde está **teste.txt**, substituir pelo caminho do seu arquivo de texto (nesse caso, ele está no diretório atual). O **ranking_palavras** é o nome do container, que eu defini no passo acima pelo parâmetro --name. O **/RankingPalavras** é o diretório do programa dentro do container.
 
-## Interface
-![Interface do programa criado](https://user-images.githubusercontent.com/36391793/82130501-4e289500-97a2-11ea-95f8-11d2b2cabd12.png)
+## Demonstração do programa
+
+
+![Demonstração do programa](https://user-images.githubusercontent.com/36391793/176787453-4555cc53-7e71-4ce7-ab32-9076fd81bff6.gif)
