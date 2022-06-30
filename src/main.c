@@ -43,7 +43,7 @@ void exibir_palavras(int intervalo_minimo, int intervalo_maximo){
 }
 
 void opcao_ler_arquivo(){
-    printf("- Digite o nome do arquivo:");
+    printf("- Digite o nome do arquivo: ");
     scanf("%256[^\n]s", nome_arquivo);
     getchar();
 	
@@ -122,8 +122,8 @@ int main(int argc, char* argv[])
             printf("Manipulando palavras absorvidas de \"%s\". Para atualizar, use a opção (1) novamente.\n\n", nome_arquivo);
         printf("(1) Ler arquivo / Atualizar\n");
         if (obter_status_ranking(ranking) == ComArquivo){
-            printf("(2) Exibir palavras\n");
-            printf("(3) Exibir palavras entre um intervalo de repetição\n");
+            printf("(2) Exibir todas as palavras\n");
+            printf("(3) Exibir as palavras que aparecem de X a Y vezes\n");
             printf("(4) Buscar palavra\n");
         }
         printf("(5) Definir limite mínimo de caracteres (atualmente é %i)\n", obter_minimo_caracteres_ranking(ranking));
